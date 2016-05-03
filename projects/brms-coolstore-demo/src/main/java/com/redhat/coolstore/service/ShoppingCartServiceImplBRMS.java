@@ -64,7 +64,7 @@ public class ShoppingCartServiceImplBRMS implements ShoppingCartService, Seriali
 
 					PromoEvent pv = new PromoEvent(promo.getItemId(), promo.getPercentOff());
 
-					commands.add(CommandFactory.newInsert(pv, null, false, "Promo Stream"));
+					commands.add(CommandFactory.newInsert(pv));
 
 				}
 
