@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import org.kie.api.command.BatchExecutionCommand;
 import org.kie.api.command.Command;
-import org.kie.api.runtime.KieSession;
 import org.kie.internal.command.CommandFactory;
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.api.model.ServiceResponse;
@@ -17,21 +16,17 @@ import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
 import org.kie.server.client.RuleServicesClient;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.redhat.coolstore.PromoEvent;
 import com.redhat.coolstore.Promotion;
 import com.redhat.coolstore.ShoppingCart;
 import com.redhat.coolstore.ShoppingCartItem;
-import com.redhat.coolstore.util.BRMSUtil;
 
 @Stateful
 public class ShoppingCartServiceImplBRMS implements ShoppingCartService, Serializable {
 
 	private static final long serialVersionUID = 6821952169434330759L;
 
-	@Inject
-	private BRMSUtil brmsUtil;
-
+	
 	@Inject
 	private PromoService promoService;
 
