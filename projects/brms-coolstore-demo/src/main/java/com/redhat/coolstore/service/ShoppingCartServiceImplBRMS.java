@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 
@@ -30,8 +31,28 @@ public class ShoppingCartServiceImplBRMS implements ShoppingCartService, Seriali
 	
 	@Inject
 	private PromoService promoService;
+	
+	private static final String SERVICE_CONTEXT = "kie-server/services/rest/server";
+	
+	private String kieHost;
+	private String kieUser;
+	private String kiePassword;
 
 	public ShoppingCartServiceImplBRMS() {
+
+	}
+	
+	@PostConstruct()
+	public void init() {
+		String kieAppName = (System.getenv("KIE_SERVER_APP_NAME") == null) ? "coolstore" : System.getenv("KIE_SERVER_APP_NAME");
+		String kieNamespace = (System.getenv("KIE_SERVER_NAMESPACE") == null) ? "coolstore-bdd" : System.getenv("KIE_SERVER_NAMESPACE");
+		String kiePort = (System.getenv("KIE_SERVER_PORT") == null) ? "8080" : System.getenv("KIE_SERVER_PORT");
+		
+		kieUser = (System.getenv("KIE_SERVER_USER") == null) ? "admin" : System.getenv("KIE_SERVER_USER");
+		kiePassword = (System.getenv("KIE_SERVER_PASSWORD") == null) ? "admin" : System.getenv("KIE_SERVER_PASSWORD");
+		
+		kieHost = String.format("http://%s.%s.svc.cluster.local:%s/%s", kieAppName, kieNamespace, kiePort, SERVICE_CONTEXT);
+		
 
 	}
 
@@ -47,11 +68,11 @@ public class ShoppingCartServiceImplBRMS implements ShoppingCartService, Seriali
 			factShoppingCart.setCartTotal(0d);
 			factShoppingCart.setShippingPromoSavings(0d);
 			factShoppingCart.setShippingTotal(0d);
-
+			
 			// HelloRulesClient.java
 			KieServicesConfiguration config = KieServicesFactory.newRestConfiguration(
-					"http://testserver2-test.rhel-cdk.10.1.2.2.xip.io/kie-server/services/rest/server", "justin",
-					"abcd1234!");
+					kieHost, kieUser,
+					kiePassword);
 			config.setMarshallingFormat(MarshallingFormat.XSTREAM);
 			RuleServicesClient client = KieServicesFactory.newKieServicesClient(config)
 					.getServicesClient(RuleServicesClient.class);
