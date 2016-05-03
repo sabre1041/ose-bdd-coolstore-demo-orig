@@ -6,9 +6,9 @@ import javax.ejb.Stateless;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-import com.redhat.coolstore.model.Product;
-import com.redhat.coolstore.model.ShoppingCart;
-import com.redhat.coolstore.model.ShoppingCartItem;
+import com.redhat.coolstore.Product;
+import com.redhat.coolstore.ShoppingCart;
+import com.redhat.coolstore.ShoppingCartItem;
 
 @Alternative
 @Stateless
@@ -55,11 +55,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	private void initShoppingCartForPricing(ShoppingCart sc) {
 
-		sc.setCartItemTotal(0);
-		sc.setCartItemPromoSavings(0);
-		sc.setShippingTotal(0);
-		sc.setShippingPromoSavings(0);
-		sc.setCartTotal(0);
+		sc.setCartItemTotal(0D);
+		sc.setCartItemPromoSavings(0D);
+		sc.setShippingTotal(0D);
+		sc.setShippingPromoSavings(0D);
+		sc.setCartTotal(0D);
 		
 		Map<String, Product> productMap = pp.getProductMap();
 		
@@ -74,7 +74,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				sci.setPrice(p.getPrice());
 			}
 			
-			sci.setPromoSavings(0);
+			sci.setPromoSavings(0D);
 			
 		}
 		

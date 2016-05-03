@@ -11,9 +11,9 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.fields.LabelField;
 
-import com.redhat.coolstore.model.Product;
-import com.redhat.coolstore.model.ShoppingCart;
-import com.redhat.coolstore.model.ShoppingCartItem;
+import com.redhat.coolstore.Product;
+import com.redhat.coolstore.ShoppingCart;
+import com.redhat.coolstore.ShoppingCartItem;
 import com.redhat.coolstore.service.ShoppingCartService;
 import com.redhat.coolstore.web.ui.components.CheckoutWindow;
 import com.redhat.coolstore.web.ui.components.ShoppingCartLine;

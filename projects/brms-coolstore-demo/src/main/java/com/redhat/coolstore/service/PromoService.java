@@ -8,9 +8,9 @@ import java.util.Set;
 
 import javax.ejb.Singleton;
 
-import com.redhat.coolstore.model.Promotion;
-import com.redhat.coolstore.model.ShoppingCart;
-import com.redhat.coolstore.model.ShoppingCartItem;
+import com.redhat.coolstore.Promotion;
+import com.redhat.coolstore.ShoppingCart;
+import com.redhat.coolstore.ShoppingCartItem;
 
 @Singleton
 public class PromoService implements Serializable {
@@ -68,7 +68,7 @@ public class PromoService implements Serializable {
 			if ( shoppingCart.getCartItemTotal() >= 75) {
 				
 				shoppingCart.setShippingPromoSavings(shoppingCart.getShippingTotal() * -1);
-				shoppingCart.setShippingTotal(0);
+				shoppingCart.setShippingTotal(0D);
 				
 			}
 			

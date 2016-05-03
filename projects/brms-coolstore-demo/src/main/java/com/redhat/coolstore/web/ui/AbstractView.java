@@ -5,7 +5,7 @@ import javax.inject.Inject;
 
 import org.vaadin.teemu.VaadinIcons;
 
-import com.redhat.coolstore.model.ShoppingCart;
+import com.redhat.coolstore.ShoppingCart;
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;

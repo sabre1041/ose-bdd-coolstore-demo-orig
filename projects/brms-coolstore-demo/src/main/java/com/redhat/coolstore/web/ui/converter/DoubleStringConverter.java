@@ -27,6 +27,9 @@ public class DoubleStringConverter implements Converter<String, Double> {
 	public String convertToPresentation(Double value,
 			Class<? extends String> targetType, Locale locale)
 			throws com.vaadin.data.util.converter.Converter.ConversionException {
+		if(value == null){
+			value = 0D;
+		}
 		return Formatter.formatPrice(value);
 	}
 
