@@ -2,11 +2,7 @@ package com.redhat.coolstore.web.ui.events;
 
 import java.util.Set;
 
-/**
- * Simple event to notify shopping cart about updates
- * 
- */
-import com.redhat.coolstore.model.Product;
+import com.redhat.coolstore.Product;
 
 public class UpdateShopppingCartEvent {
 

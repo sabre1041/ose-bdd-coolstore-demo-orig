@@ -7,8 +7,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import junit.framework.Assert;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -17,10 +15,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.redhat.coolstore.DefaultDeployment;
-import com.redhat.coolstore.model.Product;
-import com.redhat.coolstore.model.Promotion;
-import com.redhat.coolstore.model.ShoppingCart;
-import com.redhat.coolstore.model.ShoppingCartItem;
+import com.redhat.coolstore.Product;
+import com.redhat.coolstore.Promotion;
+import com.redhat.coolstore.ShoppingCart;
+import com.redhat.coolstore.ShoppingCartItem;
+
+import junit.framework.Assert;
 
 @RunWith(Arquillian.class)
 public class ShoppingCartServiceTest {

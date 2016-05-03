@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.vaadin.teemu.VaadinIcons;
 
-import com.redhat.coolstore.model.Product;
+import com.redhat.coolstore.Product;
 import com.redhat.coolstore.service.ProductService;
 import com.redhat.coolstore.web.ui.converter.StringPropertyValueGenerator;
 import com.redhat.coolstore.web.ui.events.UpdateShopppingCartEvent;

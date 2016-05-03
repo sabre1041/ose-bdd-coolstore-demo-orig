@@ -1,7 +1,7 @@
 package com.redhat.coolstore.web.ui.components;
 
-import com.redhat.coolstore.model.ShoppingCart;
-import com.redhat.coolstore.model.ShoppingCartItem;
+import com.redhat.coolstore.ShoppingCart;
+import com.redhat.coolstore.ShoppingCartItem;
 import com.redhat.coolstore.web.ui.converter.StringPropertyValueGenerator;
 import com.redhat.coolstore.web.ui.util.Formatter;
 import com.vaadin.data.Item;
