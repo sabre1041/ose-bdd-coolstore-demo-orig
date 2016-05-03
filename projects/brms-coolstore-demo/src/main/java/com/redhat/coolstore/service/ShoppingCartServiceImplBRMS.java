@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.kie.api.command.BatchExecutionCommand;
 import org.kie.api.command.Command;
 import org.kie.internal.command.CommandFactory;
+import org.kie.internal.runtime.helper.BatchExecutionHelper;
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.client.KieServicesConfiguration;
@@ -51,7 +52,7 @@ public class ShoppingCartServiceImplBRMS implements ShoppingCartService, Seriali
 			KieServicesConfiguration config = KieServicesFactory.newRestConfiguration(
 					"http://testserver2-test.rhel-cdk.10.1.2.2.xip.io/kie-server/services/rest/server", "justin",
 					"abcd1234!");
-			config.setMarshallingFormat(MarshallingFormat.JSON);
+			config.setMarshallingFormat(MarshallingFormat.XSTREAM);
 			RuleServicesClient client = KieServicesFactory.newKieServicesClient(config)
 					.getServicesClient(RuleServicesClient.class);
 			List<Command> commands = new ArrayList<Command>();
@@ -63,7 +64,7 @@ public class ShoppingCartServiceImplBRMS implements ShoppingCartService, Seriali
 
 					PromoEvent pv = new PromoEvent(promo.getItemId(), promo.getPercentOff());
 
-					commands.add(CommandFactory.newInsert(pv));
+					commands.add(CommandFactory.newInsert(pv, null, false, "Promo Stream"));
 
 				}
 
@@ -87,21 +88,39 @@ public class ShoppingCartServiceImplBRMS implements ShoppingCartService, Seriali
 				commands.add(CommandFactory.newFireAllRules());
 				BatchExecutionCommand myCommands = CommandFactory.newBatchExecution(commands,
 						"defaultStatelessKieSession");
+				System.out.println(BatchExecutionHelper.newXStreamMarshaller().toXML(myCommands));
 				ServiceResponse<String> response = client.executeCommands("default", myCommands);
 				System.out.print(response.getResult());
 				System.out.print(response.getMsg());
+				
+				
+				sc.setCartItemTotal(getValueFromXml(response.getResult(), "cartItemTotal"));
+				sc.setCartItemPromoSavings(getValueFromXml(response.getResult(), "cartItemPromoSavings"));
+				sc.setShippingTotal(getValueFromXml(response.getResult(), "shippingTotal"));
+				sc.setShippingPromoSavings(getValueFromXml(response.getResult(), "shippingPromoSavings"));
+				sc.setCartTotal(getValueFromXml(response.getResult(), "cartTotal"));
 
 
 			}
 
-			sc.setCartItemTotal(factShoppingCart.getCartItemTotal());
-			sc.setCartItemPromoSavings(factShoppingCart.getCartItemPromoSavings());
-			sc.setShippingTotal(factShoppingCart.getShippingTotal());
-			sc.setShippingPromoSavings(factShoppingCart.getShippingPromoSavings());
-			sc.setCartTotal(factShoppingCart.getCartTotal());
+			
 
 		}
 
+	}
+	
+	public Double getValueFromXml(String result, String key){
+		
+		if(result.contains(key)){
+			int start = result.indexOf("<" + key + ">") + key.length() + 2;
+			int end = result.indexOf("</" + key + ">");
+			String value = result.substring(start, end);
+			return Double.parseDouble(value);
+		}
+		
+		return 0D;
+		
+		
 	}
 
 }
