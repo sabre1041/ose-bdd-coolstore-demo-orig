@@ -8,7 +8,7 @@ rule "Total Shopping Cart Items"
 	$sci : ShoppingCartItem( shoppingCart == $sc )
     then
 	$sc.setCartItemTotal( $sc.getCartItemTotal() + ($sci.getPrice() * $sci.getQuantity()));
-	$sc.setCartItemPromoSavings($sc.getCartItemPromoSavings() + ($sci.getPromoSavings() * $sci.getQuantity()));
+	$sc.setCartItemPromoSavings($sc.getCartItemPromoSavings() - ($sci.getPromoSavings() * $sci.getQuantity()));
 	update( $sc );
 	retract ($sci);
 end
