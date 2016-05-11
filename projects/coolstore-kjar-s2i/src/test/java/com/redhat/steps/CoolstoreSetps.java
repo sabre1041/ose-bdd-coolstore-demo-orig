@@ -1,17 +1,23 @@
 package com.redhat.steps;
 
+import static com.redhat.utils.StepUtils.getKieServerPassword;
+import static com.redhat.utils.StepUtils.getKieServerUrl;
+import static com.redhat.utils.StepUtils.getKieServerUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.kie.api.command.BatchExecutionCommand;
 import org.kie.api.command.Command;
 import org.kie.internal.command.CommandFactory;
-import org.kie.internal.runtime.helper.BatchExecutionHelper;
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
 import org.kie.server.client.RuleServicesClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.redhat.coolstore.ShoppingCart;
 import com.redhat.coolstore.ShoppingCartItem;
@@ -19,13 +25,12 @@ import com.redhat.coolstore.ShoppingCartItem;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
 
 public class CoolstoreSetps {
 
 	private List<ShoppingCartItem> shoppingCartItems;
 	private ShoppingCart shoppingCart;
-
+	
 	@Given("^the following shopping cart items:$")
 	public void the_following_shopping_cart_items(List<ShoppingCartItem> shoppingCartItems) throws Throwable {
 		this.shoppingCartItems = shoppingCartItems;
@@ -34,9 +39,10 @@ public class CoolstoreSetps {
 
 	@When("^the shipping is calculated$")
 	public void the_shipping_is_calculated() throws Throwable {
+		
 		KieServicesConfiguration config = KieServicesFactory.newRestConfiguration(
-				"http://testserver2-test.rhel-cdk.10.1.2.2.xip.io/kie-server/services/rest/server", "justin",
-				"abcd1234!");
+				getKieServerUrl(), getKieServerUser(),
+				getKieServerPassword());
 		config.setMarshallingFormat(MarshallingFormat.XSTREAM);
 		RuleServicesClient client = KieServicesFactory.newKieServicesClient(config)
 				.getServicesClient(RuleServicesClient.class);

@@ -5,7 +5,7 @@ node {
    
    stage 'Checkout'
 
-       git url: 'https://github.com/sabre1041/ose-bdd-coolstore-demo'
+       checkout scm
 
    stage 'Maven Build'
    
