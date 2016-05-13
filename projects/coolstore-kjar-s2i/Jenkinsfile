@@ -79,9 +79,10 @@ node {
             }
         }
 
-        input "Deploy Application to Production?"
         
     stage "Deploy to Production"
+	
+        input "Deploy Application to Production?"
     
         try {    
         
