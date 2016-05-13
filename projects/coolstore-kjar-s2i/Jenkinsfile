@@ -25,7 +25,7 @@ node {
            cp -f ${WORKSPACE}/rules-clone/coolstore/coolstore/target/coolstore* projects/coolstore-kjar-s2i/deployments
            git add projects/coolstore-kjar-s2i/deployments/coolstore*
            git commit -m "jenkins - update to rules"
-           git push origin rules-pipeline
+           git push origin master
            popd
        """
 
