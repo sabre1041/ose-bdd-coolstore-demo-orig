@@ -6,6 +6,29 @@ node {
    stage 'Checkout'
 
        checkout scm
+       
+  stage 'Update Rules'
+
+       sh """
+           rm -rf rules-clone
+           mkdir ${WORKSPACE}/rules-clone
+           pushd ${WORKSPACE}/rules-clone
+           git clone git://10.3.8.92:9418/coolstore
+           cd coolstore/coolstore
+           mvn clean install
+           popd
+           rm -rf project-clone
+           mkdir project-clone
+           pushd project-clone
+           git clone git@github.com:sabre1041/ose-bdd-coolstore-demo.git
+           cd ose-bdd-coolstore-demo
+           cp -f ${WORKSPACE}/rules-clone/coolstore/coolstore/target/coolstore* projects/coolstore-kjar-s2i/deployments
+           git add projects/coolstore-kjar-s2i/deployments/coolstore*
+           git commit -m "jenkins - update to rules"
+           git push origin master
+           popd
+       """
+
 
     stage 'OpenShift Build'
       
